@@ -66,7 +66,6 @@ public class ReconciliationService {
 
         try (ItemReader itemReader = ItemReader.openItemReader(new File(dataFile))){
             for(Item item : itemReader){
-                System.out.println(item.getId() +" | " + item.getData() + " | " + item.getName());
                 ClearanceData clearanceData = clearanceIds.get(item.getId());
                 if(clearanceData == null){
                     report.addAbsentClearanceItemId(item.getId());
@@ -82,6 +81,7 @@ public class ReconciliationService {
             }
 
             report.addUnexpectedClearanceItemId(clearanceItemIds);
+            System.out.println(report.toString());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

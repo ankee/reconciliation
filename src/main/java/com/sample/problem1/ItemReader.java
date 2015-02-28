@@ -3,7 +3,6 @@ package com.sample.problem1;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
 import com.sample.problem1.model.Item;
-import sun.plugin.dom.exception.InvalidStateException;
 
 import javax.xml.namespace.QName;
 import javax.xml.stream.*;
@@ -118,13 +117,13 @@ public class ItemReader implements Iterable<Item>, Closeable {
         return new Iterator<Item>() {
             @Override
             public boolean hasNext() {
-                if (isClosed) throw new InvalidStateException("ItemReader has already been closed!");
+                if (isClosed) throw new IllegalStateException("ItemReader has already been closed!");
                 return hasNextInternal();
             }
 
             @Override
             public Item next() {
-                if (isClosed) throw new InvalidStateException("ItemReader has already been closed!");
+                if (isClosed) throw new IllegalStateException("ItemReader has already been closed!");
                 try {
                     return readNextInternal();
                 } catch (XMLStreamException e) {
@@ -168,7 +167,7 @@ public class ItemReader implements Iterable<Item>, Closeable {
                 }
             }
         }
-        throw new InvalidStateException("next should be invoked only when hasNext returns true");
+        throw new IllegalStateException("next should be invoked only when hasNext returns true");
     }
 
     private boolean hasNextInternal() {
